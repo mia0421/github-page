@@ -82,5 +82,5 @@ gulp.task('watch',function(){
     });
 })
 
-gulp.task('default',['startServer','librartTool','srcTool','cssTool','watch']);
+gulp.task('default',['librartTool','srcTool','cssTool','watch']);
 

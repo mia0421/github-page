@@ -2,65 +2,21 @@
 @import "compass/css3";
 @import "susy";
 
-/*compass 垂直韻律規則設定
-http://www.slideshare.net/sfismy/vertical-rhythm
-http://ithelp.ithome.com.tw/question/10155937
 
-compass 垂直韻律功能 @include
-Margin向上推N行:leader(n)
-Padding向上推N行:padding-leader(n)
-Margin向下推N行:trailer(n)
-Padding向下推N行:padding-trailer(n)
-上述功能綜合用法:rhythm(n,n,n,n)
-元素文字大小與行距:adjust-font-size-to ($font-large) 
-
-*/
 $base-font-size: 16px;
 $base-line-height: 24px;
 $rhythm-unit: "px";
 
 $susy: (
-	flow: ltr, /*flow方向 ltr:left to right rtl:right to left */
-	//container: 960px,設定box的寬度 預設為auto
-	columns: 12, /*在container建立幾格將為設定元素的部分呈現半頭明的columns*/
-	gutters: .25, /*columns 間隙*/
-	math: fluid, /*fluid:寬度用％; static：寬度用px(不做ＲＷＤ時用)*/
-	/*column-width:60px, 搭配 math: static 可以設定固定的columns*/
+	flow: ltr, 
+	columns: 12, 
+	gutters: .25, 
+	math: fluid,
 	output: float, 
 	gutter-position: after,
-	global-box-sizing: border-box,
-	//debug: (image: show ), /*將為設定元素的部分呈現半頭明的columns*/
+	global-box-sizing: border-box
 );
-/* 	global-box-sizing  設定你padding 的呈現方式
-	預設padding是會將原本的元素擠開增加寬度或高度
-	所以css3 有一設定為 border-sizing 
-	content-box: 預設值會將元素擠開
-	border-box: 設定之後padding值將會包含在寬度高度中;
-	susy 建議加上 不要讓padding影響排版
-	html {
-	  box-sizing: border-box;
-	}
-	*, *:before, *:after {
-	  box-sizing: inherit;
-	}
-*/
-/*	gutter-position columns的間隙呈現方式
-	飯粒網頁 http://sassmeister.com/gist/5a455bcc79a743599f8e
-	before 在columns左邊
-	after  在columns 右邊
-	split  平均分佈在columns 2邊
-	inside 包含在columns內columns將會連在一起
-	inside-static
-*/
-/*
-	debug image 設定
-	show 顯示colums 
-	hide  隱藏colums
-	show-columns 只顯示colums 不顯示baseline 線（如果有設定）
-	show-baseline  只顯示baseline 不顯示colums 
-*/
 
-/*讓padding 不稱寬欄寬列高*/
 html {
   box-sizing: border-box;
 }
@@ -69,9 +25,6 @@ html {
 }
 
 
-
-/*用跑回圈方式 跑出每個colums的class
-這樣就可以直接使用 */ 
 @for $i from 1 through 12{  
   .grid_#{$i}{  
     @include span($i);  
@@ -79,91 +32,6 @@ html {
   }  
 } 
 
-/*	RWD 當頁面到什麼大小的時候寫不同的設定
-	susy-breakpoint 
-	第一個參數是大小超過多大顯示
-	第二個參數可以載入不同的grid設定
-
-	$susyPc: (
-		columns:12 , 
-		gutters:.25, 
-		gutter-position:after
-	);
-	$susyPhone: (
-		columns:12 , 
-		gutters:0, 
-		gutter-position:after
-	);
-
-	@include susy-breakpoint(960px,$susyPc ) {}
-	@include susy-breakpoint(360px,$susyPhone ) {}
-*/
-
-/*  關於span Mixin & funcion 
-	1. 當父元素只佔了6 columns 子元素想佔 6欄中的一欄必須
-		**包在span裡面**
-		.main {
-			@include span(6){
-				.child {
-					@include span(1)
-				}	
-			}  
-		}
-		**寫在外面用of **
-		.main {
-			@include span(6)
-			.child {
-				@include span(1 of 6)
-			}	 
-		}
-
-	2. 今天欄想向左或向右推擠欄
-		** 用at (但必須用isolate) **
-		.main {
-			@include span(isolate 1 at 3 )
-		}
-		
-		** span function的功能 **
-		這位碰到gutter的問題可以用wide或wider來解決
-		wide： 在推1 gutter
-		wider：在推2 gutter
-
-		.main {
-			margin-left: span(4 wide);
-		}
-	 	
-	 	** 當今天gutter-position是用split、inside、inside-static （間距是用padding來推的） **
-	 	.main{  
-		    @include span(5 nest); //加上關鍵字 nest清除padding的gutter  
-		}  
-*/
-
-
-/*//練習
-$susyTest: (
-	columns:12 , 
-	gutters:.25, 
-	gutter-position: after
-);
-.cont2 {
-	@include container;
-	@include susy-breakpoint(960px, $susyTest) {
-		@include container;
-		.a1 {
-			@include span(1);
-			margin-left: span(4 wide);
-		}
-	};
-}
-.a1 {
-	height: 50px;
-	background-color: blue;
-}
-
-.a2 {
-	@include span(4);
-	background-color: pink;
-}	*/
 
 $containerWidth:100%;
 
@@ -181,8 +49,7 @@ body {
 }
 
 .cont {
-	/*susy 提供的api 可以建立出一個元素要用來放columns
-	也可以帶入寬度 ex: 960px */
+	
 	@include container($containerWidth);
 	padding: 0;  
 	& * {
@@ -217,11 +84,6 @@ body {
 		@include trailer(1);
 	}
 	
-	/*RWD 當頁面到什麼大小的時候寫不同的設定
-		susy-breakpoint 
-		第一個參數是大小超過多大顯示
-		第二個參數可以載入不同的grid設定
-	*/
 	@include susy-breakpoint($layoutMobile, $susyPhone) {
 		@include container($containerWidth); 
 		> div {
