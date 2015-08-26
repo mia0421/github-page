@@ -16,7 +16,7 @@ var gulp       = require('gulp'),
 var path = {
       Js        : ['src/*.js','app.js'],
       Css       : ['scss/*.+(scss|css)'],
-      library   : ['library/**/*.js'],
+      library   : ['librart/**/*.js'],
       Html      : ['index.html'],
       Watch     : ['build/app.min.js','build/main.min.css','index.html'],
       DEST_BUILD: 'build'
@@ -35,10 +35,12 @@ gulp.task('closeServer',function(){
 });
 
 gulp.task('librartTool',function(){
-  gulp.src(path.library)
-      .pipe(plumber())
-      .pipe(concat('librar.min.js'))
-      .pipe(gulp.dest(path.DEST_BUILD));
+     gulp.src(path.library)
+        .pipe(concat('librar.min.js'))
+        .pipe(gulp.dest(path.DEST_BUILD))
+        .pipe(notify({
+            message:'librart 完成'
+        }));
 })
 
 gulp.task('srcTool',function () {
