@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="build/main.min.css"/> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 <body ng-app="app" ng-controller="HomeCtrl">
 	<div class="cont">
@@ -46,8 +47,9 @@
 			<section id="cd-timeline" class="cd-container">
 				<div class="cd-timeline-block" 
 					 ng-repeat="item in ExpData">
-					<div class="cd-timeline-img cd-picture">
-						<img src="librart/TimeLine/img/cd-icon-picture.svg" alt="Picture">
+					<div ng-class="['cd-timeline-img',{'true':'cd-movie','false':'cd-picture'}[item.Work]]">
+ 							<img ng-hide='item.Work' src="librart/TimeLine/img/cd-icon-picture.svg" > 
+ 							<img ng-show='item.Work' src="librart/TimeLine/img/cd-icon-location.svg">
 					</div>
 					<div class="cd-timeline-content">
 						<h2>{{item.Name}} - {{item.Title}} </h2>
@@ -66,16 +68,17 @@
 				</pre>
 		</div>	
 		<div id="About" class='About'>
-			<div>
+			
 				<div class="img">
 					<img src="img/2015-05-27 11.42.08 HDR.jpg" >
 				</div>
 				<div class=" aboutMe" >
-					<p>陳品融 (Mia）前端工程師</p>	
-					<p>joeschen0421@gmail.com</p>
-					<p>mia0421 GITHUB</p>
+					<div ng-repeat="item in aboutMe">
+						<span class={{item.icon}}></span>
+						<span>{{item.text}}</span>
+					</div>	
 				</div>
-			</div>				
+						
 		</div>	
 	</div>
 </body>
